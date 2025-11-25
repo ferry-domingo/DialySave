@@ -1,0 +1,1 @@
+<img src="/images/logo.png" alt="San Ildefonso Dialysis Center" class="w-20 h-20">
