@@ -1,14 +1,18 @@
 <x-app-layout>
     <div class="max-w-5xl mx-auto mt-8 px-4">
         <h2 class="text-2xl font-bold text-gray-800 mb-4">
-            Vital Signs for Session #{{ $session->id }}
+            Vital Signs for Patient: {{ $session->patient->full_name }}
         </h2>
+         @if(session('success'))
+            <div class="bg-green-100 text-green-800 p-3 rounded mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
 
         @if($vitals->count())
             <table class="w-full table-auto border border-gray-300 bg-white rounded shadow">
-                <thead class="bg-gray-100 text-sm uppercase text-gray-700">
+                <thead class="bg-gray-100 text-xs uppercase text-gray-700">
                     <tr>
-                        <th class="px-4 py-2 border">Vitals ID</th>
                         <th class="px-4 py-2 border">Blood Pressure</th>
                         <th class="px-4 py-2 border">Heart Rate</th>
                         <th class="px-4 py-2 border">Temperature</th>
@@ -22,7 +26,6 @@
                 <tbody class="text-sm text-gray-800">
                     @foreach($vitals as $vital)
                         <tr class="border-t hover:bg-gray-50">
-                            <td class="px-4 py-2 border text-center">{{ $vital->id }}</td>
                             <td class="px-4 py-2 border text-center">{{ $vital->blood_pressure }}</td>
                             <td class="px-4 py-2 border text-center">{{ $vital->heart_rate }}</td>
                             <td class="px-4 py-2 border text-center">{{ $vital->temperature }}</td>
@@ -30,7 +33,7 @@
                             <td class="px-4 py-2 border text-center">{{ $vital->weight_before }}</td>
                             <td class="px-4 py-2 border text-center">{{ $vital->weight_after }}</td>
                             <td class="px-4 py-2 border text-center">
-                                {{ $vital->created_at ? $vital->created_at->format('M d, Y h:i A') : 'N/A' }}
+                                {{ $vital->created_at ? $vital->created_at->timezone('Asia/Manila')->format('M d, Y h:i A') : 'N/A' }}
                             </td>
                             <td class="px-4 py-2 border text-center">
                                 <div class="flex justify-center space-x-2">

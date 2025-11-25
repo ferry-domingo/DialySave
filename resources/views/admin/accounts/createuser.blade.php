@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="max-w-4xl mx-auto mt-8 px-4">
+    <div class="max-w-4xl mx-auto mt-8 px-4 ">
         <h2 class="text-2xl font-bold text-gray-800 mb-6">Create New User</h2>
 
         <form action="{{ route('users.store') }}" method="POST" class="bg-white p-6 rounded shadow grid grid-cols-2 gap-4">
@@ -26,7 +26,9 @@
                 <input type="text" name="email" id="email" placeholder="Email" class="border rounded px-3 py-2 w-full">
             </div>
 
-            <div class="col-span-2 text-right mt-4">
+            <div class="col-span-2 text-right mt-4 flex justify-between">
+                 <a href="{{ route('users.index') }}"
+                   class="text-gray-600 hover:underline text-sm mt-4">← Back to Users</a>
                 <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">Create User</button>
             </div>
         </form>

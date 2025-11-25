@@ -31,13 +31,13 @@
 
             <div>
                 <label for="remarks" class="block text-sm font-medium text-gray-700">Remarks</label>
-                <textarea name="remarks" id="remarks" rows="4"
+                <textarea name="remarks" id="remarks" rows="2"
                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">{{ $lab->remarks }}</textarea>
             </div>
 
-            <div class="flex justify-end space-x-2">
+            <div class="flex justify-between space-x-2">
                 <a href="{{ route('sessions.vitals', ['session' => $lab->session_id]) }}"
-                   class="text-gray-600 hover:underline text-sm">← Back to Session</a>
+                   class="text-gray-600 hover:underline text-sm">← Back to Lab Result</a>
                 <button type="submit"
                         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">
                     Update Lab Result

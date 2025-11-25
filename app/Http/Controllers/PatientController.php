@@ -15,8 +15,10 @@ class PatientController extends Controller
     {
         //
         $patients = Patient::latest()->paginate(5);
-        
-          return view('admin.patients.indexpatient', compact('patients'));
+        $totalpatients = Patient::count();
+        $malepatients = Patient::Where('gender', 'male')->count();
+        $femalepatients = Patient::Where('gender', 'female')->count();
+          return view('admin.patients.indexpatient', compact('patients','totalpatients','malepatients','femalepatients'));
     }
 
     /**

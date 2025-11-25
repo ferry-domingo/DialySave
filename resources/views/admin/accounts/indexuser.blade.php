@@ -20,7 +20,7 @@
                             <th class="px-4 py-2 border">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="text-sm text-gray-800">
+                    <tbody class="text-xs text-gray-800">
                         @foreach ($users as $user)
                             <tr class="border-t hover:bg-gray-50">
                                 <td class="px-4 py-2 border text-center">

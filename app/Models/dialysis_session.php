@@ -17,10 +17,10 @@ class dialysis_session extends Model
         return $this->belongsTo(Patient::class);
     }
 
- public function vital_signs()
-{
-    return $this->hasMany(vital_sign::class, 'session_id');
-}
+    public function vital_signs()
+    {
+        return $this->hasMany(vital_sign::class, 'session_id');
+    }
 
 
     public function labResults()

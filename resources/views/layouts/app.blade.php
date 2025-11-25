@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 grid grid-cols-[auto,1fr]">
+        <div class="min-h-screen bg-gray-50 grid grid-cols-[auto,1fr]">
          @include('includes.sidebar')
 
             <!-- Page Heading -->

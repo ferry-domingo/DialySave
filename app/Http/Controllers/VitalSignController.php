@@ -75,7 +75,7 @@ class VitalSignController extends Controller
     {
         //
          $session = dialysis_session::latest()->first();
-        return view('admin.vitalsigns.editvitalsign',compact('session','vital'));
+        return view('admin.vitalsigns.editvitalsign',data: compact('session','vital'));
     }
 
     /**
@@ -85,7 +85,7 @@ class VitalSignController extends Controller
     {
         //
        $vital->update($request->all());
-       return redirect()->route('vitals.index')->with('success','Vital Sign Updated Successfully');
+       return redirect()->route('sessions.vitals',['session' => $request->session_id])->with('success','Vital Sign Updated Successfully');
     }
 
     /**
@@ -95,6 +95,6 @@ class VitalSignController extends Controller
     {
         //
         $vital->delete();
-        return redirect()->route('vitals.index')->with('success','Vital Sign Deleted Successfully');
+        return back()->with('success','Vital Sign Deleted Successfully');
     }
 }

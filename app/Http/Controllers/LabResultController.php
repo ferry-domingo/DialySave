@@ -79,7 +79,7 @@ class LabResultController extends Controller
     {
         //
         $lab->update($request->all());
-        return redirect()->route('labs.index')->with('success','Lab Result Updated Successfully');
+        return redirect()->route('sessions.labs',['session'=>$lab->session_id])->with('success','Lab Result Updated Successfully');
     }
 
     /**

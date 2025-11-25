@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="max-w-xl mx-auto mt-6">
+    <div class="max-w-xl mx-auto mt-20">
         <form action="{{ route('sessions.store') }}" method="POST" class="space-y-4">
             @csrf
 
@@ -42,11 +42,13 @@
                 <input type="text" name="notes" id="notes" rows="3" class="border rounded px-3 py-2 w-full" placeholder="Optional remarks..."></input>
             </div>
             
-            <div class="text-right">
+            <div class="text-right flex justify-between">
+                 <a href="{{ route('sessions.index') }}"
+                   class="text-gray-600 hover:underline text-sm mt-4">← Back to Session</a>
                 <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition">Create Session</button>
-            </div>
-            <a href="{{ route('sessions.index') }}"
-                   class="text-gray-600 hover:underline text-sm">← Back to Session</a>
+           
+           
+                    </div>
         </form>
         
     </div>

@@ -24,9 +24,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('admin/dashboard', function () {
-    return view('admin/dashboard');
-})->middleware(middleware: ['auth', 'verified'])->name('admin/dashboard');
+Route::get('patients', function () {
+    return view('admin/patients/indexpatient');
+})->middleware(middleware: ['auth', 'verified'])->name('patients.index');
 
 Route::get('admin/accounts',function(){
     return view('admin/accounts');
@@ -40,11 +40,11 @@ Route::get('admin/dialysis_sessions/',function(){
     Route::resource('users', UserController::class);
 }); */
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+    Route::middleware('auth')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
 
 require __DIR__.'/auth.php';
 Route::resource('/users',Usercontroller::class);

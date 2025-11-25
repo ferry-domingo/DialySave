@@ -29,9 +29,14 @@ class DialysisSessionController extends Controller
 }
 
    public function index()
+
 {
-    $dialysis_sessions = dialysis_session::with('vital_signs')->get();
-    return view("admin.dialysis_session.indexsession", compact("dialysis_sessions"));
+    $totalSessions = dialysis_session::count();
+
+    $dialysis_sessions = dialysis_session::with('vital_signs')->paginate(5);
+    $hemodialysisCount = dialysis_session::Where('dialysis_type','hemodialysis')->count();
+    $peritonealCount = dialysis_session::Where('dialysis_type','peritoneal')->count();
+    return view("admin.dialysis_session.indexsession", compact("dialysis_sessions",'totalSessions','hemodialysisCount','peritonealCount'));
 }
 
 

@@ -50,7 +50,9 @@
                     class="border rounded px-3 py-2 w-full" placeholder="e.g. 64.80">
             </div>
 
-            <div class="col-span-2 text-right">
+            <div class="col-span-2 text-right flex justify-between">
+                 <a href="{{ route('sessions.vitals', ['session' => $vital->session_id]) }}"
+                   class="text-gray-600 hover:underline text-sm mt-4">← Back to Vitals</a>
                 <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition">Update Vitals</button>
             </div>
         </form>
