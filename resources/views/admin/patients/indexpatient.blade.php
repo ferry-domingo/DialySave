@@ -40,8 +40,7 @@
 
 
         @can('add patients')
-            <div class="flex justify-between items-center">
-                <h2 class="text-2xl font-bold text-gray-800">Patients List</h2>
+            <div class="flex justify-end">
                 <a href="{{ route('patients.create') }}"
                     class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm flex items-center">
                     <i class="fas fa-user-plus mr-2"></i> Add Patient
@@ -53,9 +52,14 @@
                     {{ session('success') }}
                 </div>
             @endif
-
-            <div class="overflow-x-auto bg-white shadow rounded mt-6">
-                <table class="min-w-full table-auto border border-gray-300">
+            
+            <div class="overflow-x-auto bg-white shadow rounded mt-0">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-gray-800 px-2">Patients List</h2>
+                     <input type="text" id="searchInput" placeholder="Search patients..." class="text-xs border-gray-300 px-14 m-2 rounded-lg ps-3">
+                </div>
+               
+                <table id="patientTable" class="min-w-full table-auto border border-gray-300">
                     <thead class="bg-gray-100 text-gray-700 text-sm uppercase">
                         <tr>
                             <th class="px-4 py-2 border">ID</th>
@@ -63,7 +67,7 @@
                             <th class="px-4 py-2 border">Birthdate</th>
                             <th class="px-4 py-2 border">Gender</th>
                             <th class="px-4 py-2 border">Contact</th>
-                            <th class="px-4 py-2 border">Blood Type</th>
+                            <th class="px-2 py-2 border">Blood Type</th>
                             <th class="px-4 py-2 border">Medical Conditions</th>
                             <th class="px-4 py-2 border">Actions</th>
                         </tr>
@@ -82,7 +86,7 @@
                                     <div class="flex justify-center space-x-2">
                                         <a href="{{ route('patients.edit', $patient->id) }}"
                                             class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-xs flex items-center">
-                                            <i class="fas fa-user-pen mr-1"></i> Edit
+                                            <i class="fas fa-user-pen mr-1"></i>
                                         </a>
                                         <form action="{{ route('patients.destroy', $patient->id) }}" method="POST"
                                             onsubmit="return confirm('Are you sure you want to delete this user?');">
@@ -90,9 +94,12 @@
                                             @method('DELETE')
                                             <button type="submit"
                                                 class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-xs flex items-center">
-                                                <i class="fas fa-trash mr-1"></i> Delete
+                                                <i class="fas fa-trash mr-1"></i>
                                             </button>
+                                
                                         </form>
+                                        <button onclick="
+                                        printJS()"><i class="fas fa-print"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -120,4 +127,5 @@
         <p class="text-gray-600 mt-2">You can view your dialysis sessions and vital signs here.</p>
     </div>
     @endrole
+   
 </x-app-layout>

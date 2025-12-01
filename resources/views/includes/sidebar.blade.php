@@ -1,10 +1,10 @@
-<aside class="flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l ">
+<aside class="flex flex-wrap flex-col w-48 h-screen px-4 py-8  bg-white border-r rtl:border-r-0 rtl:border-l ">
     <div class="flex items-center justify-center">
         <a href="#">
             <img class="max-w-40" src="/images/logo.png" alt="">
         </a>
     </div>
-    <div class="flex flex-col justify-between flex-1 mt-6">
+    <div class="flex flex-col justify-between flex-1 mt-6 text-sm">
         <nav>
 
             <i class="object-cover  rounded-full text-xl fas fa-user-tie ml-4 mt-4" alt="avatar"></i>
@@ -21,7 +21,7 @@
                 <span class="mx-4 font-medium ">Dashboard</span>
             </a>
 
-            <a class="flex items-center px-4 py-2 mt-5 text-black  transition-colors duration-300 transform rounded-md hover:bg-green-100 "
+            <a class="flex items-center px-4 py-2 mt-5 text-black  transition-colors duration-300 transform rounded-md hover:bg-green-100"
                 href="{{route('users.index')}}">
                 <svg class="w-5 h-5 text-yellow-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path

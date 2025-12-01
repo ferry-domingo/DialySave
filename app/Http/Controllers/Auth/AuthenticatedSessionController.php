@@ -28,15 +28,7 @@ public function store(LoginRequest $request): RedirectResponse
     $request->authenticate();
     $request->session()->regenerate();
 
-    $user = Auth::user();
-    $selectedRole = $request->input('role'); 
-
-    if (!$user->hasRole($selectedRole)) {
-        Auth::logout();
-        return back()->withErrors([
-            'role' => 'You are not authorized to log in with this role.',
-        ]);
-    }
+    Auth::user();
 
     return redirect()->route('patients.index');
 }

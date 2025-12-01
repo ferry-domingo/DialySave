@@ -1,6 +1,4 @@
 <x-guest-layout>
-
-  
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}">
@@ -10,31 +8,7 @@
             <p class="text-gray-500">Sign in to access your account</p>
 
         </div>
-
-        <div>
-            <x-input-label for="role" :value="__('I am a')" />
-            <div x-data="{ open: false, selected: 'Select your role' }" class="relative">
-                <button @click="open = !open" class="w-full px-4 py-2 border rounded-md">
-                    <i class="fas fa-user-tag mr-2"></i> <span x-text="selected"></span>
-                </button>
-
-                <ul x-show="open" class="absolute z-10 bg-white border rounded-md mt-1 w-full">
-                    <li @click="selected = 'admin'; open = false" class="px-4 py-2 hover:bg-gray-100">
-                        <i class="fas fa-lock mr-2"></i> Admin
-                    </li>
-                    <li @click="selected = 'doctor'; open = false" class="px-4 py-2 hover:bg-gray-100">
-                        <i class="fas fa-user-doctor mr-2"></i> Doctor
-                    </li>
-                    <li @click="selected = 'staff'; open = false" class="px-4 py-2 hover:bg-gray-100">
-                        <i class="fas fa-user-tie mr-2"></i> Staff
-                    </li>
-                     <li @click="selected = 'patient'; open = false" class="px-4 py-2 hover:bg-gray-100">
-                        <i class="fas fa-hospital-user mr-2"></i> Patient
-                    </li>
-                </ul>
-                   <input type="hidden" name="role" :value="selected !== 'Select your role' ? selected : ''">
-            </div>
-         
+        
         <!-- Email Address -->
         <div class="relative">
             <x-input-label for="email" :value="__('Email')" />

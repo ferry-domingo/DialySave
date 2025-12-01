@@ -14,12 +14,11 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="max-h-screen flex flex-col sm:justify-start items-center sm:pt-0 bg-gray-100">
+    <body class="font-sans text-gray-900 antialiased bg-gray-100    ">
+        <div class="max-h-screen flex flex-col sm:justify-start items-center sm:pt-0">
             <div class="flex flex-col items-center mt-8">
                 <a href="/">
                     <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                   
                 </a>
                  <h1 class="text-2xl text-yellow-400">DialySAVE</h1>
                  <p class="text-gray-500">Dialysis Center Management System</p>

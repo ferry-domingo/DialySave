@@ -1,5 +1,5 @@
 import './bootstrap';
-
+import './searchpatient';
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
