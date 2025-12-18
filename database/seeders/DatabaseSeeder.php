@@ -24,8 +24,8 @@ class DatabaseSeeder extends Seeder
 
         // Create roles
         $admin = Role::firstOrCreate(['name' => 'admin']);
-        $doctor = Role::firstOrCreate(['name' => 'doctor']);
-        $staff = Role::firstOrCreate(['name' => 'staff']);
+        // $doctor = Role::firstOrCreate(['name' => 'doctor']);
+        // $staff = Role::firstOrCreate(['name' => 'staff']);
         $patient = Role::firstOrCreate(['name' => 'patient']);
 
         // Create permissions
@@ -50,6 +50,10 @@ class DatabaseSeeder extends Seeder
             'add dialysis_session',
             'edit dialysis_session',
             'delete dialysis_session',
+            'view appointment',
+            'add appointment',
+            'edit appointment',
+            'delete appointment',
             'view session_staff',
             'add session_staff',
             'edit session_staff',
@@ -62,38 +66,38 @@ class DatabaseSeeder extends Seeder
         $admin->givePermissionTo(Permission::all());
 
 
-        $doctor->givePermissionTo([
-            'view patients',
-            'add patients',
-            'edit patients',
-            'view dialysis_session',
-            'add dialysis_session',
-            'edit dialysis_session',
-            'view lab_result',
-            'add lab_result',
-            'edit lab_result',
-            'view vital_sign',
-            'add vital_sign',
-            'edit vital_sign',
-        ]);
+        // $doctor->givePermissionTo([
+        //     'view patients',
+        //     'add patients',
+        //     'edit patients',
+        //     'view dialysis_session',
+        //     'add dialysis_session',
+        //     'edit dialysis_session',
+        //     'view lab_result',
+        //     'add lab_result',
+        //     'edit lab_result',
+        //     'view vital_sign',
+        //     'add vital_sign',
+        //     'edit vital_sign',
+        // ]);
 
-        $staff->givePermissionTo([
-            'view patients',
-            'add patients',
-            'edit patients',
-            'view dialysis_session',
-            'add dialysis_session',
-            'edit dialysis_session',
-            'view lab_result',
-            'add lab_result',
-            'edit lab_result',
-            'view vital_sign',
-            'add vital_sign',
-            'edit vital_sign',
-            'view session_staff',
-            'add session_staff',
-            'edit session_staff',
-        ]);
+        // $staff->givePermissionTo([
+        //     'view patients',
+        //     'add patients',
+        //     'edit patients',
+        //     'view dialysis_session',
+        //     'add dialysis_session',
+        //     'edit dialysis_session',
+        //     'view lab_result',
+        //     'add lab_result',
+        //     'edit lab_result',
+        //     'view vital_sign',
+        //     'add vital_sign',
+        //     'edit vital_sign',
+        //     'view session_staff',
+        //     'add session_staff',
+        //     'edit session_staff',
+        // ]);
 
         $patient->syncPermissions([]);
 
@@ -101,8 +105,15 @@ class DatabaseSeeder extends Seeder
         $adminuser = User::create([
             'name' => 'admin',
             'email' => 'lovelyferrydomingo.basc@gmail.com',
-            'password' => bcrypt('s@nildefonsodialysave')
+            'role' => 'admin',
+            'password' => bcrypt('admin123')
         ]);
         $adminuser->assignRole('admin');
+
+        $patientuser = User::create([
+            'name' => 'user',
+            'email' => 'testuser@sample',
+            'password' => bcrypt('testuser')
+        ]);
     }
 }

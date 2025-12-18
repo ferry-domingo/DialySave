@@ -25,8 +25,33 @@ class Patient extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function dialysisSessions()
+    public function sessions()
     {
         return $this->hasMany(dialysis_session::class);
     }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
+    protected static function boot()
+    {
+    parent::boot();
+
+    static::created(function ($patient) {
+
+        // PREFIX (Pwede mong palitan, sample: D)
+        $prefix = 'D';
+
+        // Make padded number based sa auto-increment ID
+        $generated = $prefix . str_pad($patient->id, 7, '0', STR_PAD_LEFT);
+        // Example: D0000001
+
+        // Save PID
+        $patient->patient_id = $generated;
+        $patient->save();
+    });
+    }
+
 }

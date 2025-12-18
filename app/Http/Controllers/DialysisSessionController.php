@@ -13,31 +13,41 @@ class DialysisSessionController extends Controller
     /**
      * Display a listing of the resource.
      */
-       public function showLabs($session_id)
-{
-    $session = dialysis_session::findOrFail($session_id);
-    $lab_results = lab_result::where('session_id', $session_id)->get();
 
-    return view('admin.labresult.sessionlabresult', compact('session', 'lab_results'));
+    public function print(dialysis_session $session)
+{
+    $session->load('patient', 'vital_sign', 'lab_result');
+    return view('admin.dialysis_session.print', compact('session'));
 }
+    public function showLabs($session_id)
+    {
+        $session = dialysis_session::findOrFail($session_id);
+        $lab_results = lab_result::where('session_id', $session_id)->get();
+
+        return view('admin.labresult.sessionlabresult', compact('session', 'lab_results'));
+    }
     public function showVitals($session_id)
-{
-    $session = dialysis_session::findOrFail($session_id);
-    $vitals = vital_sign::where('session_id', $session_id)->get();
+    {
+        $session = dialysis_session::findOrFail($session_id);
+        $vitals = vital_sign::where('session_id', $session_id)->get();
 
-    return view('admin.vitalsigns.sessionvitals', compact('session', 'vitals'));
-}
+        return view('admin.vitalsigns.sessionvitals', compact('session', 'vitals'));
+    }
 
-   public function index()
+    public function index()
+    {
+        $totalSessions = dialysis_session::count();
+        $dialysis_sessions = dialysis_session::orderBy('created_at', 'desc')->paginate(5);
+        $hemodialysisCount = dialysis_session::Where('dialysis_type', 'hemodialysis')->count();
+        $peritonealCount = dialysis_session::Where('dialysis_type', 'peritoneal')->count();
 
-{
-    $totalSessions = dialysis_session::count();
+        foreach ($dialysis_sessions as $session) {
+         $session->status = ($session->vital_sign && $session->lab_result) ? 'completed' : 'in_progress';
+         $session->save();
+        }
 
-    $dialysis_sessions = dialysis_session::with('vital_signs')->paginate(5);
-    $hemodialysisCount = dialysis_session::Where('dialysis_type','hemodialysis')->count();
-    $peritonealCount = dialysis_session::Where('dialysis_type','peritoneal')->count();
-    return view("admin.dialysis_session.indexsession", compact("dialysis_sessions",'totalSessions','hemodialysisCount','peritonealCount'));
-}
+        return view("admin.dialysis_session.indexsession", compact("dialysis_sessions", 'totalSessions', 'hemodialysisCount', 'peritonealCount'));
+    }
 
 
     /**
@@ -46,7 +56,7 @@ class DialysisSessionController extends Controller
     public function create()
     {
         //
-         $patients = Patient::all(); 
+        $patients = Patient::all();
         return view('admin.dialysis_session.createsession', compact('patients'));
     }
 
@@ -56,34 +66,39 @@ class DialysisSessionController extends Controller
     public function store(Request $request)
     {
         //
+         // Kunin ang last OR #
+        $lastOR = dialysis_session::orderBy('id', 'desc')->value('or_number');
+
+        // If walang laman table (first record)
+        if (!$lastOR) {
+            $newOR = 10001;
+        } else {
+            $newOR = intval($lastOR) + 1;
+        }
 
         $request->validate([
             'patient_id' => 'required',
-            'session_date' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
-            'dialysis_type'=> 'required',
-            'notes' => 'required',
+            'dialysis_type' => 'required',
+            'notes' => 'nullable',
         ]);
 
-            dialysis_session::create([
+        dialysis_session::create([
+            'or_number' => $newOR,
             'patient_id' => $request->patient_id,
-            'session_date' => $request->session_date,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
             'dialysis_type' => $request->dialysis_type,
             'notes' => $request->notes,
         ]);
 
-        return redirect()->route('sessions.index')->with('success','');
+        return redirect()->route('sessions.index')->with('success', 'Session Created Successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(dialysis_session $session)
     {
         //
+        return view('admin.dialysis_session.showsession', compact('session'));
     }
 
     /**
@@ -92,8 +107,8 @@ class DialysisSessionController extends Controller
     public function edit(dialysis_session $session)
     {
         //
-        $patients = Patient::all(); 
-        return view('admin.dialysis_session.editsession', compact('session','patients'));
+        $patients = Patient::all();
+        return view('admin.dialysis_session.editsession', compact('session', 'patients'));
     }
 
     /**
@@ -103,7 +118,7 @@ class DialysisSessionController extends Controller
     {
         //
         $session->update($request->all());
-        return redirect()->route('sessions.index')->with('success','Session Updated Successfullys');
+        return redirect()->route('sessions.index')->with('success', 'Session Updated Successfullys');
     }
 
     /**
@@ -113,6 +128,6 @@ class DialysisSessionController extends Controller
     {
         //
         $session->delete();
-        return redirect()->route('sessions.index')->with('success','Session Deleted Successfully');
+        return redirect()->route('sessions.index')->with('success', 'Session Deleted Successfully');
     }
 }

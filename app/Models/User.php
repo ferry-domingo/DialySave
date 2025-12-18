@@ -25,9 +25,9 @@ class User extends Authenticatable
         return $this->hasOne(Patient::class);
     }
 
-    public function assignedSessions()
+    public function sessions()
     {
-        return $this->belongsToMany(dialysis_session::class, 'session_staff');
+        return $this->hasMany(dialysis_session::class);
     }
 
     /**

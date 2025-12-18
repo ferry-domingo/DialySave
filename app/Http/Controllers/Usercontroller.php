@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Patient;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\SendTemporaryPassword;
@@ -14,16 +15,27 @@ class Usercontroller extends Controller
     /**
      * Display a listing of the resource.
      */
- /*   public function __construct()
-{
-    $this->middleware('role:admin');
-}
-*/
+    /*   public function __construct()
+   {
+       $this->middleware('role:admin');
+   }
+   */
+    public function createForPatient($patient_id)
+    {
+        //
+        $patient = Patient::findOrFail($patient_id);
+        $users = User::with('roles')->get();
+
+        return view('admin.accounts.createuser', [
+            'patient_id' => $patient_id,
+            'patient' => $patient,
+        ]);
+    }
     public function index()
     {
         //
-       $users = User::with('roles')->get();
-
+        $users = User::with('roles')->get();
+        
         return view("admin.accounts.indexuser", compact("users"));
     }
 
@@ -33,27 +45,27 @@ class Usercontroller extends Controller
     public function create()
     {
         //
-        
-        return view('admin.accounts.createuser');
+         return view('admin.accounts.createuser');
+
     }
+
 
     /**
      * Store a newly created resource in storage.
      */
-   public function store(Request $request)
-{
-    $request->validate([
-        "name" => "required|min:5|max:50",
-        "role" => "required|min:3|max:10",
-        "email" => "nullable|email|unique:users,email|max:255",
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            "name" => "required|min:5|max:50",
+            'password' => 'required|string|uppercase|min:3|confirmed',
+            'role' => 'required|string|in:admin,patient',
+            "email" => "nullable|email|unique:users,email|max:255",
+        ]);
 
-    $generatedPassword = Str::random(10);
-
-       $user = User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($generatedPassword),
+            'password' => bcrypt($request->password),
         ]);
 
         $user->assignRole($request->role);
@@ -62,11 +74,16 @@ class Usercontroller extends Controller
         session()->push('created_users', [
             'role' => $request->role,
             'name' => $user->name,
-            'password' => $generatedPassword,
+            'password' => $request->password,
             'email' => $user->email
-    ]);
-    return redirect()->route('users.create')->with('success', 'User Added Successfully!');
-}
+        ]);
+
+        $patient = Patient::find($request->patient_id);
+        $patient->user_id = $user->id;
+        $patient->save();
+
+        return redirect()->route('users.createForPatient', $patient->id)->with('success', 'User Added Successfully!');
+    }
 
 
     /**
@@ -76,7 +93,7 @@ class Usercontroller extends Controller
     {
         //
         return view('users.show', compact('user'));
-    
+
     }
 
     /**
@@ -95,7 +112,7 @@ class Usercontroller extends Controller
     {
         //
         $user->update($request->all());
-        return redirect()->route('users.index')->with('success','User Updated Successfully');
+        return redirect()->route('users.index')->with('success', 'User Updated Successfully');
 
     }
 
@@ -106,6 +123,6 @@ class Usercontroller extends Controller
     {
         //
         $user->delete();
-        return redirect()->route('users.index')->with('success','User Deleted Successfully');
+        return redirect()->route('users.index')->with('success', 'User Deleted Successfully');
     }
 }

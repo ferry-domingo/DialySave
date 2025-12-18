@@ -8,24 +8,28 @@ use Illuminate\Database\Eloquent\Model;
 class dialysis_session extends Model
 {
     use HasFactory;
-     protected $fillable = [
-        'patient_id', 'session_date', 'start_time', 'end_time',
-        'dialysis_type', 'notes'
+    protected $fillable = [
+        'or_number',
+        'patient_id',
+        'session_date',
+        'start_time',
+        'end_time',
+        'dialysis_type',
+        'notes'
     ];
     public function patient()
     {
         return $this->belongsTo(Patient::class);
     }
 
-    public function vital_signs()
+    public function vital_sign()
     {
-        return $this->hasMany(vital_sign::class, 'session_id');
+        return $this->hasOne(vital_sign::class, 'session_id');
     }
 
-
-    public function labResults()
+    public function lab_result()
     {
-        return $this->hasMany(lab_result::class);
+        return $this->hasOne(lab_result::class,'session_id');
     }
 
     public function staff()

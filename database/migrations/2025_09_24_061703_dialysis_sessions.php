@@ -14,11 +14,10 @@ return new class extends Migration
         //
          Schema::create('dialysis_sessions', function (Blueprint $table) {
         $table->id();
+        $table->string('or_number')->unique();
         $table->foreignId('patient_id')->constrained('patients')->onDelete('cascade');
-        $table->date('session_date');
-        $table->time('start_time');
-        $table->time('end_time');
         $table->enum('dialysis_type', ['Hemodialysis', 'Peritoneal']);
+        $table->enum('status', ['in_progress', 'completed'])->default('in_progress');
         $table->text('notes')->nullable();
         $table->timestamps();
     });

@@ -14,7 +14,7 @@ return new class extends Migration
        Schema::create('vital_signs', function (Blueprint $table) {
     $table->id();
     $table->foreignId('session_id')->constrained('dialysis_sessions')->onDelete('cascade');
-    $table->string('blood_pressure')->nullable();
+    $table->string(column: 'blood_pressure')->nullable();
     $table->integer('heart_rate')->nullable();
     $table->decimal('temperature', 4, 1)->nullable();
     $table->decimal('weight_before', 5, 2)->nullable();

@@ -9,11 +9,14 @@ class lab_result extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'session_id', 'hemoglobin', 'creatinine',
-        'potassium', 'remarks'
+        'session_id',
+        'hemoglobin',
+        'creatinine',
+        'potassium',
+        'remarks'
     ];
     public function session()
     {
-        return $this->belongsTo(dialysis_session::class);
+        return $this->belongsTo(dialysis_session::class, 'session_id');
     }
 }

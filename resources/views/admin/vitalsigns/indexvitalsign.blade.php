@@ -27,7 +27,7 @@
                     <tbody class="text-sm text-gray-800">
                         @foreach($vitals as $vital)
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 border text-center">{{ $vital->session_id }}</td>
+                                <td class="px-4 py-2 border text-center">{{ $vital->id }}</td>
                                 <td class="px-4 py-2 border text-center">{{ $vital->blood_pressure }}</td>
                                 <td class="px-4 py-2 border text-center">{{ $vital->heart_rate }}</td>
                                 <td class="px-4 py-2 border text-center">{{ $vital->temperature }}</td>

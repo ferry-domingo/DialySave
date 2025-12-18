@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use session;
 
-class SessionStaffController extends Controller
+use App\Models\dialysis_session;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class PatientSession extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -12,6 +16,14 @@ class SessionStaffController extends Controller
     public function index()
     {
         //
+        $patient = Auth::user()->patient; // get patient related to logged-in user
+
+        $dialysis_sessions = $patient->sessions()
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('patient.dialysis-session', compact('dialysis_sessions'));
+
     }
 
     /**
@@ -36,6 +48,13 @@ class SessionStaffController extends Controller
     public function show(string $id)
     {
         //
+        $patient = Auth::user()->patient; 
+
+        $session = $patient->sessions()
+            ->where('id', $id)
+            ->first();
+
+          return view('patient.showsession', compact('session'));
     }
 
     /**

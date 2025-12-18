@@ -5,18 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'DialySave') }}</title>
 
         <!-- Fonts -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="print.css">
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-50 grid grid-cols-[auto,1fr]">
-         @include('includes.sidebar')
+    <body class="font-sans antialiased pt-16">
+        <div class="min-h-screen bg-blue-50 grid grid-cols-[auto,1fr]">
+         @include('includes.navbar-admin')
 
             <!-- Page Heading -->
             @if (isset($header))
@@ -32,6 +33,7 @@
                 {{ $slot }}
             </main>
         </div>
+        <x-delete-button-modal></x-delete-button-modal>
     </body>
-    <script src="print.js"></script>
+    
 </html>

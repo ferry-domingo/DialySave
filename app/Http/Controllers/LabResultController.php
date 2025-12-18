@@ -50,7 +50,7 @@ class LabResultController extends Controller
         'remarks' => $request->remarks,
     ]);
 
-    return redirect()->route('labs.index', ['session' => $request->session_id])
+    return redirect()->route('sessions.labs', ['session' => $request->session_id])
                      ->with('success', 'Lab result saved successfully!');
 }
 
@@ -89,7 +89,7 @@ class LabResultController extends Controller
     {
         //
         $lab->delete();
-        return redirect()->route('labs.index')->with('success','Lab Result Deleted Successfully');
+        return redirect()->route('sessions.labs',['session'=>$lab->session_id])->with('success','Lab Result Deleted Successfully');
 
     }
 }

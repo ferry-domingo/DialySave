@@ -61,10 +61,10 @@ class VitalSignController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(vital_sign $vital)
+    public function show(vital_sign $vitals)
     {
         //
-        return view('admin.vitalsigns.showvitalsign', compact('vital'));
+        return view('admin.vitalsigns.indexvitalsign', compact('vitals'));
 
     }
 
