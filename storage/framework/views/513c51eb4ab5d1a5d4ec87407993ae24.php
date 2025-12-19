@@ -1,0 +1,1 @@
+<img src="/images/logo.png" alt="San Ildefonso Dialysis Center" class="w-20 h-20"><?php /**PATH C:\laragon\www\DialySave\resources\views/components/application-logo.blade.php ENDPATH**/ ?>
